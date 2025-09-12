@@ -1,0 +1,31 @@
+{
+  "name": "login-ui-v2",
+  "version": "1.0.0",
+  "description": "RuoYi Login Frontend V2 - Compatible with backend login API",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "python -m http.server 8091"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "element-plus": "^2.3.8",
+    "axios": "^1.4.0",
+    "vue-router": "^4.2.4",
+    "pinia": "^2.1.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.5"
+  },
+  "keywords": [
+    "vue",
+    "element-plus",
+    "login",
+    "ruoyi"
+  ],
+  "author": "RuoYi",
+  "license": "MIT"
+}

@@ -1,0 +1,126 @@
+/* 全局样式重置 */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  height: 100%;
+}
+
+/* 登录页面样式 */
+.login-container {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.login-form {
+  border-radius: 6px;
+  background: #ffffff;
+  width: 400px;
+  padding: 25px 25px 5px 25px;
+  box-shadow: 0 0 25px #cac6c6;
+}
+
+.login-form .el-input {
+  height: 38px;
+}
+
+.login-form .el-input input {
+  height: 38px;
+}
+
+.login-code {
+  width: 33%;
+  height: 38px;
+  float: right;
+}
+
+.login-code img {
+  cursor: pointer;
+  vertical-align: middle;
+  height: 38px;
+  border-radius: 4px;
+}
+
+.el-login-footer {
+  height: 40px;
+  line-height: 40px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-family: Arial;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.login-code-img {
+  height: 38px;
+  padding-left: 12px;
+}
+
+/* Dashboard页面样式 */
+.dashboard-container {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.dashboard-header {
+  background: #fff;
+  padding: 0 20px;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.dashboard-content {
+  padding: 20px;
+}
+
+.welcome-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+}
+
+/* 工具类 */
+.text-center {
+  text-align: center;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+/* Element Plus 样式覆盖 */
+.el-button--primary {
+  background-color: #409eff;
+  border-color: #409eff;
+}
+
+.el-button--primary:hover {
+  background-color: #66b1ff;
+  border-color: #66b1ff;
+}

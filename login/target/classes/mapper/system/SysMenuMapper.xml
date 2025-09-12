@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.SysMenuMapper">
+
+    <resultMap type="org.example.domain.entity.SysMenu" id="SysMenuResult">
+        <id property="menuId" column="menu_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="path" column="path"/>
+        <result property="component" column="component"/>
+        <result property="queryParam" column="query_param"/>
+        <result property="visible" column="visible"/>
+        <result property="status" column="status"/>
+        <result property="perms" column="perms"/>
+        <result property="isFrame" column="is_frame"/>
+        <result property="isCache" column="is_cache"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="icon" column="icon"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="createTime" column="create_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectMenuListByUserId" resultMap="SysMenuResult">
+        select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.query_param, m.visible, m.status,
+        m.perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
+        from sys_menu m
+            left join sys_role_menu rm on m.menu_id = rm.menu_id
+            left join sys_role r on rm.role_id = r.role_id
+        ${ew.getCustomSqlSegment}
+    </select>
+
+    <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
+        select distinct m.menu_id,
+                        m.parent_id,
+                        m.menu_name,
+                        m.path,
+                        m.component,
+                        m.query_param,
+                        m.visible,
+                        m.status,
+                        m.perms,
+                        m.is_frame,
+                        m.is_cache,
+                        m.menu_type,
+                        m.icon,
+                        m.order_num,
+                        m.create_time
+        from sys_menu m
+                 left join sys_role_menu rm on m.menu_id = rm.menu_id and m.status = '0'
+                 left join sys_role r on rm.role_id = r.role_id and r.status = '0'
+        where m.menu_type in ('M', 'C')
+          and r.role_id in (select role_id from sys_user_role where user_id = #{userId})
+        order by m.parent_id, m.order_num
+    </select>
+
+    <select id="selectMenuListByRoleId" resultType="Long">
+        select m.menu_id
+        from sys_menu m
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        where rm.role_id = #{roleId}
+        <if test="menuCheckStrictly">
+            and m.menu_id not in (select m.parent_id from sys_menu m inner join sys_role_menu rm on m.menu_id =
+            rm.menu_id and rm.role_id = #{roleId})
+        </if>
+        order by m.parent_id, m.order_num
+    </select>
+
+    <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
+        select distinct m.perms
+        from sys_menu m
+                 left join sys_role_menu rm on m.menu_id = rm.menu_id and m.status = '0'
+                 left join sys_role r on r.role_id = rm.role_id and r.status = '0'
+        where r.role_id in (select role_id from sys_user_role where user_id = #{userId})
+          and m.perms is not null and m.perms != ''
+    </select>
+
+    <select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
+        select distinct m.perms
+        from sys_menu m
+                 left join sys_role_menu rm on m.menu_id = rm.menu_id
+        where m.status = '0' and rm.role_id = #{roleId}
+          and m.perms is not null and m.perms != ''
+    </select>
+
+    <select id="selectMenuTreeAll" resultMap="SysMenuResult">
+        select m.menu_id,
+               m.parent_id,
+               m.menu_name,
+               m.path,
+               m.component,
+               m.query_param,
+               m.visible,
+               m.status,
+               m.perms,
+               m.is_frame,
+               m.is_cache,
+               m.menu_type,
+               m.icon,
+               m.order_num,
+               m.create_time,
+               m.remark
+        from sys_menu m
+        where m.menu_type in ('M', 'C')
+          and m.status = '0'
+        order by m.parent_id, m.order_num
+    </select>
+
+</mapper>
